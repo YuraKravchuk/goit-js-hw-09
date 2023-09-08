@@ -1,11 +1,11 @@
 import Notiflix from 'notiflix';
 
-const from = document.querySelector('.from');
+const form = document.querySelector('.form');
 const delay = document.querySelector('[name="delay"]');
 const step = document.querySelector('[name="step"]');
 const amount = document.querySelector('[name="amount"]');
 
-from.addEventListener('submit', onSubmitBtn);
+form.addEventListener('submit', onSubmitBtn);
 
 function onSubmitBtn(e) {
   e.preventDefault();
@@ -14,12 +14,12 @@ function onSubmitBtn(e) {
 
     createPromise(i, delay)
       .then(({ position, delay }) => {
-        Notiflix.Report.failure(
+        Notiflix.Notify.failure(
           `✅ Fulfilled promise ${position} in ${delay}ms`
         );
       })
       .catch(({ position, delay }) => {
-        Notiflix.Report.failure(
+        Notiflix.Notify.failure(
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
