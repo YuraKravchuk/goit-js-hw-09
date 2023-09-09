@@ -5,16 +5,16 @@ const delay = document.querySelector('[name="delay"]');
 const step = document.querySelector('[name="step"]');
 const amount = document.querySelector('[name="amount"]');
 
-form.addEventListener('submit', onSubmitBtn);
+form.addEventListener('submit', onSubmitButton);
 
-function onSubmitBtn(e) {
+function onSubmitButton(e) {
   e.preventDefault();
-  for (let i = 1; i < amount.value; i++) {
-    let promiseDelay = Number(delay.value) + Number(step.value) * i;
+  for (let i = 1; i <= amount.value; i++) {
+    let del = Number(delay.value) + Number(step.value) * (i - 1);
 
-    createPromise(i, delay)
+    createPromise(i, del)
       .then(({ position, delay }) => {
-        Notiflix.Notify.failure(
+        Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
         );
       })
@@ -24,18 +24,17 @@ function onSubmitBtn(e) {
         );
       });
   }
+  e.currentTarget.reset();
 }
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
-    const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
       if (shouldResolve) {
-        // Fulfill
-        resolve({ position, delay });
+        resolve({ position: position, delay: delay });
       } else {
-        // Reject
-        reject({ position, delay });
+        reject({ position: position, delay: delay });
       }
     }, delay);
   });
